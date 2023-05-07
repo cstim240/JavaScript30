@@ -61,15 +61,18 @@
 <script>
   
 
-  function playSound(){
+  function playSound(e){
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); //audio[] selects the element of audio and the attribute 'data-key'
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`); //this is used for the background color effect we see
     if (!audio) return; //stop the function from running all together ie. you press q which doesn't have a designated audio element + data-key attribution
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); //this is used for the background color effect we see
+    
+    key.classList.add('playing'); //this simply adds a class attribute to the div we are calling
     audio.currentTime = 0; //rewind to the start
     audio.play();
-    key.classList.add('playing'); //this simply adds a class attribute to the div we are calling
+    
     //key.classList.remove('playing');
   }
+
 
   function removeTransition(e){
     if (e.propertyName !== 'transform') return; //skip it if it's not a transform
