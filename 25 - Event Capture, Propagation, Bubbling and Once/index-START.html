@@ -42,8 +42,33 @@
 </style>
 
 <button></button>
-<script>
 
+<script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation(); //browser starts at the lowest one, runs the propagation and stops bubbling so it stops triggerring the function after that
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false, //the function logText is not going to get run on the bubble up, but run capture down. By default, it is false.
+    once: true //ensures the event runs once but doesn't run again until you reload the page
+  }));
+
+  button.addEventListener('click', () => {
+    console.log('Click!!');
+  }, {
+    once: true //if you do not wish for someone to click it more than once
+  });
+
+  
 </script>
 </body>
 </html>
+
+<!--During the capturing phase, the event propagates from the topmost element to the target element.
+In the target phase, the event is handled by the target element itself.
+During the bubbling phase, the event propagates from the target element to the topmost element.
+By understanding these phases, you can control how events are handled and choose whether to capture them during the capturing phase or let them bubble up during the bubbling phase.-->
